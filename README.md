@@ -23,6 +23,7 @@ Save the matrix to a dicom file. Upload the whole dataset back into the TPS. Som
 
 The program will change the SOPInstanceUID of the RT dose file.
 
+The program is using [Evil-DICOM](https://github.com/rexcardan/Evil-DICOM) to read and write dicom files. Give this repository a star.
 
 ## Log
 
@@ -45,4 +46,4 @@ SOFTWARE.
 
 ## LICENSE
 
-Published under the MIT license. The zip package contains other (NuGet) libraries that are not under the same license. 
+Published under the MIT license. The zip package contains other (NuGet) libraries that are published under the Appache 2 license. Please read the txt files. 
