@@ -4,7 +4,7 @@ A standalone app for creating longitudinal dose gradients in the RT dose matrix.
 ![image](image.png)
 
 ## Setup
-The program is running on .NET Framework version 4.7.2. You can either compile the program or download the executable: 
+The program is running on .NET Framework version 4.7.2. You can either compile the program or download the executable:  [link](https://github.com/brjdenis/DoseGradient/releases/download/v1.0/DoseGradient_v1.0.zip)
 
 In order to compile the program open the solution in Visual Studio 2019/2022. Restore NuGet packages (OxyPlot and EvilDicom) and compile for Release 64bit.
 
