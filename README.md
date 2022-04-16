@@ -30,7 +30,7 @@ The program will change the SOPInstanceUID of the RT dose file.
 
 ## Important note
 
-**Before using this program see the [licence]() and make sure you understand it. The program comes with absolutely no guarantees of any kind. It is entirely on you what you do with it and what the results are.**
+**Before using this program see the [licence](https://github.com/brjdenis/DoseGradient/blob/master/LICENSE) and make sure you understand it. The program comes with absolutely no guarantees of any kind. It is entirely on you what you do with it and what the results are.**
 
 ```
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
