@@ -1,0 +1,145 @@
+﻿<Window x:Class="DoseGradient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DoseGradient"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="DoseGradient" Height="800" Width="800" WindowStartupLocation="CenterScreen" Background="Silver">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type oxy:TrackerControl}">
+            <Setter Property="LineStroke" Value="Red" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10,10,10,10" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" x:Name="PlotDoseImageColumn"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="0.4*" x:Name="PlotDoseImageRow"/>
+                <RowDefinition Height="0.3*" x:Name="PlotProfileRow"/>
+                <RowDefinition Height="0.3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Height="Auto" VerticalAlignment="Center">
+                    <Button Grid.Column="0" Content="Open..." Width="100" Height="30" Click="Button_Click" VerticalAlignment="Center"></Button>
+                    <Button Content="Save..." Width="100"  Height="30" Margin="10,0,0,0" VerticalAlignment="Center" Click="Button_Click_5"></Button>
+                    <CheckBox x:Name="CheckBoxOverwriteZeroVoxels" Height="30" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="15,0,0,0" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">
+                        <Label Content="Overwrite all voxels" VerticalAlignment="Top" ToolTip="Using this option will overwrite all elements of the dose matrix (in each z-slice), regardless of their value."></Label>
+                    </CheckBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Height="Auto" VerticalAlignment="Center">
+                    <Label Content="Select plot type:"  Height="30" VerticalAlignment="Center"></Label>
+                    <ComboBox Grid.Column="1" x:Name="DoseImagePlotTypeComboBox"  Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" VerticalContentAlignment="Center" SelectionChanged="DoseImagePlotTypeComboBox_SelectionChanged"></ComboBox>
+                    <Button Content="?" Width="30" Margin="10,0,0,0" Background="AliceBlue" Click="Button_Click_6"></Button>
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Row="1" x:Name="GridPlotImageDose">
+                <oxy:PlotView x:Name="OxyPlotImageDose" Width="750" Height="275" IsMouseWheelEnabled="True" PreviewMouseWheel="PlotAperture_PreviewMouseWheel" VerticalAlignment="Top"/>
+            </Grid>
+
+            <Grid Grid.Row="2" x:Name="GridPlotProfile">
+                <oxy:PlotView x:Name="OxyPlotProfile" Width="750" Height="210" IsMouseWheelEnabled="False" VerticalAlignment="Top"/>
+            </Grid>
+            <GroupBox Grid.Row="3" Margin="0,10,0,0">
+                <GroupBox.Header>
+                    <DockPanel HorizontalAlignment="Stretch">
+                        <Label Content="Gradient regions" HorizontalAlignment="Left"></Label>
+                        <Button Content="0 gradients" HorizontalAlignment="Right" Height="20" Width="80" Margin="5,0,0,0" Click="Button_Click_2"/>
+                        <Button Content="1 gradient" HorizontalAlignment="Right" Height="20" Width="80" Margin="5,0,0,0" Click="Button_Click_3"/>
+                        <Button Content="2 gradients" HorizontalAlignment="Right" Height="20" Width="80" Margin="5,0,0,0" Click="Button_Click_4"/>
+                        <Button Content="Default" HorizontalAlignment="Right" Height="20" Width="60" Margin="5,0,0,0" Click="Button_Click_1"/>
+                    </DockPanel>
+                </GroupBox.Header>
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="D1" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="1" Content="D2" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="2" Content="D3" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="3" Content="D4" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="4" Content="D5" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+
+                        <TextBox Grid.Row="1" Grid.Column="0" x:Name="TextBoxD1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="TextBoxD2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxD3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="TextBoxD4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="4" x:Name="TextBoxD5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="P1" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="1" Content="P2" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="2" Content="P3" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="3" Content="P4" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="4" Content="P5" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="5" Content="P6" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="6" Content="P7" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+                        <Label Grid.Row="0" Grid.Column="7" Content="P8" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"></Label>
+
+                        <TextBox Grid.Row="1" Grid.Column="0" x:Name="TextBoxP1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="TextBoxP2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="2" x:Name="TextBoxP3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="TextBoxP4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="4" x:Name="TextBoxP5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="5" x:Name="TextBoxP6" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="6" x:Name="TextBoxP7" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="7" x:Name="TextBoxP8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextChanged="OnTextChanged" LostFocus="TextBoxLostFocus"></TextBox>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+
+</Window>

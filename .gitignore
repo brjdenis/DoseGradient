@@ -1,0 +1,9 @@
+# Folders to ignore
+.vs/*
+bin/*
+obj/*
+packages/*
+primer/*
+#Files to ignore
+*.pdb
+*.p7s
