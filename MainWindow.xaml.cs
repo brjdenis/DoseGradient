@@ -412,7 +412,7 @@ namespace DoseGradient
 
             for (int i = 0; i < this.gradientXPositions.Count; i++)
             {
-                this.gradientXPositions[i] = x0 + i * dx;
+                this.gradientXPositions[i] = Math.Round(x0 + i * dx, 2);
             }
         }
 
@@ -563,12 +563,69 @@ namespace DoseGradient
             SetTextBoxes();
         }
 
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            // 2 gradients upside down
+            if (this.DoseMatrix == null)
+            {
+                return;
+            }
+            double xmin = this.DoseImageHeatMapSeries.X0;
+            double xmax = this.DoseImageHeatMapSeries.X1;
+            SetGradientStartingValues();
+            this.gradientXPositions[0] = xmin;
+            this.gradientXPositions[1] = xmin;
+            this.gradientXPositions[2] = xmin;
+            this.gradientXPositions[3] = xmin + (xmax - xmin) / 3.0 - 0.5;
+            this.gradientXPositions[4] = xmin + (xmax - xmin) / 3.0 + 0.5;
+            this.gradientXPositions[5] = xmin + 2 * (xmax - xmin) / 3.0 - 0.5;
+            this.gradientXPositions[6] = xmin + 2 * (xmax - xmin) / 3.0 + 0.5;
+            this.gradientXPositions[7] = xmax;
+            this.gradientXPositions[8] = xmax;
+            this.gradientXPositions[9] = xmax;
+
+            this.gradientDoses = new List<double>() { 30.6, 30.6, 30.6, 30.6, 0, 0, 30.6, 30.6, 30.6, 30.6 };
+
+            CreateLineSeriesProfilePlot();
+            SetTextBoxes();
+        }
+
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            // 1 gradient left to right
+            if (this.DoseMatrix == null)
+            {
+                return;
+            }
+            double xmin = this.DoseImageHeatMapSeries.X0;
+            double xmax = this.DoseImageHeatMapSeries.X1;
+            SetGradientStartingValues();
+
+            this.gradientXPositions[0] = xmin;
+            this.gradientXPositions[1] = xmin;
+            this.gradientXPositions[2] = xmin;
+            this.gradientXPositions[3] = (xmin + xmax) / 2.0 - 0.5;
+            this.gradientXPositions[4] = (xmin + xmax) / 2.0 + 0.5;
+            this.gradientXPositions[5] = xmax;
+            this.gradientXPositions[6] = xmax;
+            this.gradientXPositions[7] = xmax;
+            this.gradientXPositions[8] = xmax;
+            this.gradientXPositions[9] = xmax;
+
+            this.gradientDoses = new List<double>() { 30.6, 30.6, 30.6, 30.6, 0, 0, 0, 0, 0, 0 };
+
+            CreateLineSeriesProfilePlot();
+            SetTextBoxes();
+        }
+
         private bool CheckProfileValidity()
         {
             // All X must be increasing. Dose must be non-negative.
             for (int i = 1; i < this.gradientXPositions.Count; i++)
             {
-                if (this.gradientXPositions[i - 1] > this.gradientXPositions[i])
+                if (Math.Round(this.gradientXPositions[i - 1], 2) > Math.Round(this.gradientXPositions[i], 2))
                 {
                     return false;
                 }
@@ -772,34 +829,38 @@ namespace DoseGradient
         {
             List<double> x = this.gradientXPositions;
             List<double> y = this.gradientDoses;
+            double dose;
 
             if (t <= x.First())
             {
-                return y.First();
+                dose = y.First();
             }
-            else if (t >= y.Last())
+            else if (t >= x.Last())
             {
-                return y.Last();
+                dose = y.Last();
             }
             else
             {
                 int i;
-                for (i = 0; i < x.Count - 2; i++)
+                for (i = 0; i < x.Count - 1; i++)
                 {
-                    if (x[i] <= t && t < x[i + 1])
+                    if (t >= x[i] && t < x[i + 1])
                     {
                         break;
                     }
                 }
                 if (Math.Abs(x[i + 1] - x[i]) < 1e-8)
                 {
-                    return (y[i] + y[i + 1]) / 2.0;
+                    dose = (y[i] + y[i + 1]) / 2.0;
                 }
                 else
                 {
-                    return y[i] + ((y[i + 1] - y[i]) / (x[i + 1] - x[i])) * (t - x[i]);
+                    dose = y[i] + ((y[i + 1] - y[i]) / (x[i + 1] - x[i])) * (t - x[i]);
                 }
+
             }
+            return dose;
+            
         }
 
 
@@ -1327,7 +1388,7 @@ namespace DoseGradient
 
             dcm.FindFirst(TagHelper.PixelData).DData_ = byteArray;
 
-            dcm.FindFirst(TagHelper.DoseGridScaling).DData = Double.Parse(newData.Item4.ToString("E6"));
+            dcm.FindFirst(TagHelper.DoseGridScaling).DData = newData.Item4;
 
             var _smallestImagePixelValue = dcm.FindFirst(TagHelper.SmallestImagePixelValue) as AbstractElement<ushort>;
             if (_smallestImagePixelValue != null)
@@ -1341,7 +1402,10 @@ namespace DoseGradient
             }
             // Since Eclipse is using 32 bit voxels, setting the true largest pixel value would not work because only unsigned short is allowed.
             // However, Eclipse is not writing this tag to dicom. Ha ha ...
-            dcm.FindFirst(TagHelper.SOPInstanceUID).DData = UIDHelper.GenerateUID();
+            if ((bool)this.CheckBoxChangeUID.IsChecked == true)
+            {
+                dcm.FindFirst(TagHelper.SOPInstanceUID).DData = UIDHelper.GenerateUID();
+            }
             dcm.WriteAddMeta(filePath);
             // using dcm.Write() doesn't work with Monaco, it works only with Eclipse
         }
@@ -1357,5 +1421,6 @@ namespace DoseGradient
             HelpWindow helpwindow = new HelpWindow();
             helpwindow.Show();
         }
+
     }
 }

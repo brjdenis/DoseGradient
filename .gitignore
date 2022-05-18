@@ -7,3 +7,4 @@ primer/*
 #Files to ignore
 *.pdb
 *.p7s
+*.xcf

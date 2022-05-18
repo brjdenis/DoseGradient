@@ -54,19 +54,7 @@
                 <LineBreak/>
                 Save the new dose matrix. Import the original data with the new dose file into the TPS. On some systems you have to delete the original plan 
                 before you can import the data back. The program changes the SOPInstanceUID of the dose file, but other files are left untouched.<LineBreak/><LineBreak/>
-                <Bold>LICENSE</Bold>
-                <LineBreak/>
-                The DoseGradient program is published under the MIT license. The Microsoft NuGet libraries are published under the Appache 2.0 license.<LineBreak/>
-                <LineBreak/>
-                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-                SOFTWARE.
-                <LineBreak/> <LineBreak/>
-                Denis Brojan
+                
             </TextBlock>
         </Grid>
     </ScrollViewer>

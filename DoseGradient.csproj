@@ -180,6 +180,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -223,6 +226,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\2grad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\2grad2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\0grad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\1grad1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\2grad3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\1grad2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

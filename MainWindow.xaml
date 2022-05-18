@@ -43,8 +43,11 @@
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Height="Auto" VerticalAlignment="Center">
                     <Button Grid.Column="0" Content="Open..." Width="100" Height="30" Click="Button_Click" VerticalAlignment="Center"></Button>
                     <Button Content="Save..." Width="100"  Height="30" Margin="10,0,0,0" VerticalAlignment="Center" Click="Button_Click_5"></Button>
-                    <CheckBox x:Name="CheckBoxOverwriteZeroVoxels" Height="30" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="15,0,0,0" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">
+                    <CheckBox x:Name="CheckBoxOverwriteZeroVoxels" Height="30" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="15,0,0,0">
                         <Label Content="Overwrite all voxels" VerticalAlignment="Top" ToolTip="Using this option will overwrite all elements of the dose matrix (in each z-slice), regardless of their value."></Label>
+                    </CheckBox>
+                    <CheckBox x:Name="CheckBoxChangeUID" Height="30" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="15,0,0,0" IsChecked="True">
+                        <Label Content="Change UID" VerticalAlignment="Top" ToolTip="Using this option will change SOPInstanceUID of the RT dose file."></Label>
                     </CheckBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Height="Auto" VerticalAlignment="Center">
@@ -66,10 +69,24 @@
                 <GroupBox.Header>
                     <DockPanel HorizontalAlignment="Stretch">
                         <Label Content="Gradient regions" HorizontalAlignment="Left"></Label>
-                        <Button Content="0 gradients" HorizontalAlignment="Right" Height="20" Width="80" Margin="5,0,0,0" Click="Button_Click_2"/>
-                        <Button Content="1 gradient" HorizontalAlignment="Right" Height="20" Width="80" Margin="5,0,0,0" Click="Button_Click_3"/>
-                        <Button Content="2 gradients" HorizontalAlignment="Right" Height="20" Width="80" Margin="5,0,0,0" Click="Button_Click_4"/>
-                        <Button Content="Default" HorizontalAlignment="Right" Height="20" Width="60" Margin="5,0,0,0" Click="Button_Click_1"/>
+                        <Button HorizontalAlignment="Right" Height="20" Width="25" Margin="5,0,0,0" Click="Button_Click_2">
+                            <Image Source="/images/0grad.png"></Image>
+                        </Button>
+                        <Button HorizontalAlignment="Right" Height="20" Width="25" Margin="5,0,0,0" Click="Button_Click_3">
+                            <Image Source="/images/1grad1.png"></Image>
+                        </Button>
+                        <Button HorizontalAlignment="Right" Height="20" Width="25" Margin="5,0,0,0" Click="Button_Click_8">
+                            <Image Source="/images/1grad2.png"></Image>
+                        </Button>
+                        <Button HorizontalAlignment="Right" Height="20" Width="25" Margin="5,0,0,0" Click="Button_Click_4">
+                            <Image Source="/images/2grad.png"></Image>
+                        </Button>
+                        <Button HorizontalAlignment="Right" Height="20" Width="25" Margin="5,0,0,0" Click="Button_Click_7">
+                            <Image Source="/images/2grad2.png"></Image>
+                        </Button>
+                        <Button HorizontalAlignment="Right" Height="20" Width="25" Margin="5,0,0,0" Click="Button_Click_1">
+                            <Image Source="/images/2grad3.png"></Image>
+                        </Button>
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid HorizontalAlignment="Stretch">
